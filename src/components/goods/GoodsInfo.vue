@@ -91,7 +91,7 @@ export default {
              
             
         // })
-          this.goodsinfo = {title:"小米(Mi) 小米Note 166双网通版",stock_quantity: 60,se1l_price: 2199,market_price: 2699,id:this.id,goods_no:"SD2932214404",add_time: "2015-04-19T17:19:30.000Z"}
+          this.goodsinfo = {title:"小米(Mi) 小米Note 166双网通版",stock_quantity: 60,se1l_price: 2199,market_price: 2699,id:this.id,goods_no:"SD2932214404",add_time: "2015-04-19T17:19:30.000Z",img_url: "src/images/sj_1.jpg",}
              
       },
       goDesc(id){
@@ -101,11 +101,20 @@ export default {
            this.$router.push({name:"goodscomment",params:{id}})
       },
       addToShopCar(){
-        this.ballFlag=!this.ballFlag
+        this.ballFlag=!this.ballFlag;
+        var goodsinfo_1 = {
+          id:this.id,
+          title:this.goodsinfo.title,
+          count:this.selectedCount,
+          img_url:this.goodsinfo.img_url,
+          price:this.goodsinfo.se1l_price,
+          selected:true
+        };
+        this.$store.commit("addToCar",goodsinfo_1);
       },
       getSelectedCount(count){
-        this.selectedCount=count;
-        console.log(this.selectedCount)
+        this.selectedCount=parseInt(count);
+    
       },
       beforeEnter(el){
         el.style.transform = `translate(0,0)`

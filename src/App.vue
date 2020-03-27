@@ -1,6 +1,10 @@
 <template>
   <div class='app-container'>
-    <mt-header fixed title="固定在顶部"></mt-header>
+    <mt-header fixed title="固定在顶部">
+		<span to="/" slot="left" @click="goBack" v-show ="flag">
+			<mt-button icon='back'>返回</mt-button>
+		</span>
+	</mt-header>
 	<transition>
 		<router-view></router-view>
 	</transition>
@@ -14,7 +18,9 @@
 				<span class="mui-tab-label">消息</span>
 			</router-link>
 			<router-link class="mui-tab-item-llb" to="/shopcar">
-				<span class="mui-icon mui-icon-extra mui-icon-extra-cart"><span class="mui-badge">9</span></span>
+				<span class="mui-icon mui-icon-extra mui-icon-extra-cart">
+					<span class="mui-badge">{{$store.getters.getAllCount}}</span>
+				</span>
 				<span class="mui-tab-label">购物车</span>
 			</router-link>
 			<router-link class="mui-tab-item-llb" to="/search">
@@ -24,8 +30,36 @@
 		</nav>
   </div>
 </template>
-
+	
 <script>
+export default{
+	data(){
+		return{
+			flag:false
+		}
+	},
+	methods:{
+		goBack(){
+			
+			this.$router.go(-1);
+		}
+	},
+	created(){
+		this.flag = this.$route.path=="/home"?false:true
+		
+	},
+	watch:{
+		'$route.path':function(newVal, oldVal){
+			if(newVal=='/home'){
+				this.flag = false
+			}else{
+				this.flag = true
+			}
+			
+
+		}
+	}
+}
 </script>
 
 
